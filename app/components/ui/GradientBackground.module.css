@@ -1,0 +1,296 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: #000000;
+}
+
+.gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 70%),
+    #000000;
+  animation: gradientShift 20s ease-in-out infinite;
+}
+
+.grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.6;
+  animation: gridPulse 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 255, 255, 0.02) 3px,
+    rgba(0, 255, 255, 0.02) 6px
+  );
+  pointer-events: none;
+  animation: scanlineMove 10s linear infinite;
+}
+
+.glow1 {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: float1 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.glow2 {
+  position: absolute;
+  bottom: 20%;
+  right: 20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 0, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float2 18s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  50% {
+    background-position: 100% 100%, 0% 0%, 50% 50%;
+  }
+}
+
+@keyframes gridPulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes scanlineMove {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.9);
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-40px, 40px) scale(1.1);
+  }
+  66% {
+    transform: translate(50px, -30px) scale(0.9);
+  }
+}
+
+.neutronsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neutron {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00FFFF;
+  box-shadow: 
+    0 0 12px #00FFFF,
+    0 0 24px #00FFFF,
+    0 0 36px rgba(0, 255, 255, 0.8);
+  will-change: transform;
+}
+
+.neutronHR1 {
+  top: 120px;
+  left: -10px;
+  background: #00FFFF;
+  box-shadow: 
+    0 0 12px #00FFFF,
+    0 0 24px #00FFFF,
+    0 0 36px rgba(0, 255, 255, 0.8);
+  animation: moveHorizontalRight 10s linear infinite;
+}
+
+.neutronHR2 {
+  top: 240px;
+  left: -10px;
+  background: #06B6D4;
+  box-shadow: 
+    0 0 12px #06B6D4,
+    0 0 24px #06B6D4,
+    0 0 36px rgba(6, 182, 212, 0.8);
+  animation: moveHorizontalRight 12s linear infinite 3s;
+}
+
+.neutronHL1 {
+  top: 180px;
+  right: -10px;
+  background: #FBBF24;
+  box-shadow: 
+    0 0 12px #FBBF24,
+    0 0 24px #FBBF24,
+    0 0 36px rgba(251, 191, 36, 0.8);
+  animation: moveHorizontalLeft 11s linear infinite 2s;
+}
+
+.neutronHL2 {
+  top: 300px;
+  right: -10px;
+  background: #EC4899;
+  box-shadow: 
+    0 0 12px #EC4899,
+    0 0 24px #EC4899,
+    0 0 36px rgba(236, 72, 153, 0.8);
+  animation: moveHorizontalLeft 9s linear infinite 4s;
+}
+
+.neutronVD1 {
+  top: -10px;
+  left: 120px;
+  background: #00FFFF;
+  box-shadow: 
+    0 0 12px #00FFFF,
+    0 0 24px #00FFFF,
+    0 0 36px rgba(0, 255, 255, 0.8);
+  animation: moveVerticalDown 10s linear infinite;
+}
+
+.neutronVD2 {
+  top: -10px;
+  left: 240px;
+  background: #3B82F6;
+  box-shadow: 
+    0 0 12px #3B82F6,
+    0 0 24px #3B82F6,
+    0 0 36px rgba(59, 130, 246, 0.8);
+  animation: moveVerticalDown 11s linear infinite 3s;
+}
+
+.neutronVU1 {
+  bottom: -10px;
+  left: 180px;
+  background: #FBBF24;
+  box-shadow: 
+    0 0 12px #FBBF24,
+    0 0 24px #FBBF24,
+    0 0 36px rgba(251, 191, 36, 0.8);
+  animation: moveVerticalUp 12s linear infinite 2s;
+}
+
+.neutronVU2 {
+  bottom: -10px;
+  left: 300px;
+  background: #EC4899;
+  box-shadow: 
+    0 0 12px #EC4899,
+    0 0 24px #EC4899,
+    0 0 36px rgba(236, 72, 153, 0.8);
+  animation: moveVerticalUp 9.5s linear infinite 4s;
+}
+
+@keyframes moveHorizontalRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 20px));
+  }
+}
+
+@keyframes moveHorizontalLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100vw - 20px));
+  }
+}
+
+@keyframes moveVerticalDown {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(100vh + 20px));
+  }
+}
+
+@keyframes moveVerticalUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-100vh - 20px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient,
+  .grid,
+  .scanlines,
+  .glow1,
+  .glow2 {
+    animation: none;
+  }
+  
+  .neutronLine,
+  .neutron {
+    animation: none;
+  }
+}
+
