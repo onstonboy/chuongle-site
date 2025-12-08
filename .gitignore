@@ -35,5 +35,8 @@ yarn-error.log*
 next-env.d.ts
 
 .cursor/
-docs/
+docs/implementation_plans/
+docs/research_plans/
+docs/ui_ux/
+docs/requirements/
 
