@@ -1,6 +1,6 @@
 ---
-appStoreId: 
-playStoreId: 
+appStoreId: 6756311686
+playStoreId: com.cdev.daily_quote
 ---
 
 # Daily Quote - Your Daily Dose of Inspiration 🌟
@@ -146,6 +146,14 @@ Your favorites, history, and preferences are stored locally on your device. We r
 **Start your journey of daily inspiration today!**
 
 Transform your mornings, find peace in your evenings, and build a habit of reflection and growth. Daily Quote is more than an app—it's your companion on the path to a more inspired, mindful life.
+
+**Available on:**
+- 📱 [iOS App Store](https://apps.apple.com/app/id6756311686)
+- 🤖 [Google Play Store](https://play.google.com/store/apps/details?id=com.cdev.daily_quote)
+
+**App ID:**
+- iOS: 6756311686
+- Android: com.cdev.daily_quote
 
 ---
 
