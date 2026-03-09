@@ -3,6 +3,8 @@ import ProjectsShowcase from '@/app/components/sections/ProjectsShowcase';
 import About from '@/app/components/sections/About';
 import { getProjects } from '@/app/lib/projects';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const projects = await getProjects();
 

@@ -66,15 +66,27 @@ export default function ProjectCard({ project, variant = 'medium', index }: Proj
     >
       <div className={styles.imageContainer}>
         {!imageError ? (
-          <Image
-            src={project.imageUrl}
-            alt={project.name}
-            width={400}
-            height={200}
-            className={styles.image}
-            loading={index < 3 ? 'eager' : 'lazy'}
-            onError={() => setImageError(true)}
-          />
+          project.imageUrl.startsWith('http') ? (
+            <img
+              src={project.imageUrl}
+              alt={project.name}
+              width={400}
+              height={200}
+              className={styles.image}
+              loading={index < 3 ? 'eager' : 'lazy'}
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <Image
+              src={project.imageUrl}
+              alt={project.name}
+              width={400}
+              height={200}
+              className={styles.image}
+              loading={index < 3 ? 'eager' : 'lazy'}
+              onError={() => setImageError(true)}
+            />
+          )
         ) : (
           <div className={styles.placeholder}>
             <span>{project.name}</span>

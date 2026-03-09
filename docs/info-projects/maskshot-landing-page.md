@@ -3,9 +3,11 @@ appStoreId: 6760220410
 playStoreId: com.cdev.maskshot
 ---
 
-# MaskShot — Landing Page Content
+# MaskShot — Clean Screenshots Before You Share
 
 # landing page url: maskshot.chuongle.dev
+
+## Clean screenshots before sharing
 
 Use this markdown as the single source of truth for building a landing page (static site, Notion, or CMS). Replace `[SCREENSHOT-X]` and image paths with your actual assets.
 
