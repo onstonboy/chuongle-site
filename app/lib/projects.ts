@@ -4,6 +4,7 @@ import { Project } from './types';
 const PROJECT_DISPLAY_ORDER: string[] = [
   'maskshot-landing-page',
   'scorecounter-landing-page',
+  'subkit-landing-page',
   'genbooth-landing-page',
   'ai-caption-landing-page',
   'led-board-landing-page',
