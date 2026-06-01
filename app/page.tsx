@@ -1,6 +1,9 @@
+import { Suspense } from 'react';
 import Hero from '@/app/components/sections/Hero';
 import ProjectsShowcase from '@/app/components/sections/ProjectsShowcase';
 import About from '@/app/components/sections/About';
+import StatsCounter from '@/app/components/features/StatsCounter';
+import StatsBoundary from '@/app/components/ui/StatsBoundary';
 import { getProjects } from '@/app/lib/projects';
 import { Project } from '@/app/lib/types';
 
@@ -18,6 +21,11 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <StatsBoundary>
+        <Suspense fallback={null}>
+          <StatsCounter />
+        </Suspense>
+      </StatsBoundary>
       <ProjectsShowcase projects={projects} />
       <About />
     </>
