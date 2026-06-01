@@ -35,7 +35,7 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <div className={styles.contact}>
+          <div id="contact" className={styles.contact}>
             <h3 className={styles.subheading}>Contact</h3>
             <p>
               <a href="mailto:chuongdev97@gmail.com" className={styles.email}>
