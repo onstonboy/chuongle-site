@@ -1,6 +1,12 @@
 ---
 appStoreId: 1616525097
 playStoreId: com.chuongdever.luckycard
+features:
+  - AI-powered card deck generation with 12+ exciting topics
+  - Custom deck creator — build your own questions and dares
+  - Pre-built Do or Drink, Daring, and Couples decks
+  - 5 stunning card themes with smooth 3D flip animations
+  - Offline play with confetti celebrations and group support
 ---
 
 # Lucky Card - Landing Page Content Guide

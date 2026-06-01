@@ -21,6 +21,11 @@ export default function ProjectCard({ project, variant = 'medium', index }: Proj
     const currentRef = cardRef.current;
     if (!currentRef) return;
 
+    if (!('IntersectionObserver' in window)) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

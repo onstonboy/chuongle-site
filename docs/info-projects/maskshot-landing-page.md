@@ -1,6 +1,13 @@
 ---
 appStoreId: 6760220410
 playStoreId: com.cdev.maskshot
+imageUrl: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/f5/0a/c0f50a1d-375b-8eff-bf63-19e3cd54d101/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg
+features:
+  - On-device OCR detects emails, tokens, API keys, credit cards & more
+  - Rectangle and oval redaction with custom colors and manual areas
+  - Secure vault protected by PIN or biometrics — nothing leaves your device
+  - Save, share, or both — set a default export action in settings
+  - Custom regex patterns for your own sensitive data types (Premium)
 ---
 
 # MaskShot — Clean Screenshots Before You Share

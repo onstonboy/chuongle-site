@@ -1,6 +1,12 @@
 ---
 appStoreId: 1667458517
 playStoreId: com.chuongdever.score_counter
+features:
+  - Real-time score sharing via QR code — play together remotely
+  - Unlimited players with custom avatars and colors
+  - Full game history with rankings and win analytics
+  - Epic confetti & trophy celebrations on wins
+  - 100% offline — no account needed, start immediately
 ---
 
 # Score Counter – The Ultimate Game Scoring Companion

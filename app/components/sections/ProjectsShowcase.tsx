@@ -1,5 +1,6 @@
 import { Project } from '@/app/lib/types';
 import ProjectCard from '@/app/components/features/ProjectCard';
+import StoreLinksCard from '@/app/components/features/StoreLinksCard';
 import styles from './ProjectsShowcase.module.css';
 
 interface ProjectsShowcaseProps {
@@ -19,6 +20,7 @@ export default function ProjectsShowcase({ projects }: ProjectsShowcaseProps) {
             index={index}
           />
         ))}
+        <StoreLinksCard />
       </div>
     </section>
   );

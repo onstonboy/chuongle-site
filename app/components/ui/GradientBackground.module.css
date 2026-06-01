@@ -66,6 +66,7 @@
   filter: blur(60px);
   animation: float1 15s ease-in-out infinite;
   pointer-events: none;
+  will-change: transform;
 }
 
 .glow2 {
@@ -79,6 +80,7 @@
   filter: blur(80px);
   animation: float2 18s ease-in-out infinite;
   pointer-events: none;
+  will-change: transform;
 }
 
 @keyframes gradientShift {

@@ -77,7 +77,7 @@ export default function Hero() {
                 <span
                   key={index}
                   className={`${styles.letter} ${mounted ? styles.visible : ''}`}
-                  style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}
+                  style={{ '--delay': `${(index * 0.1).toFixed(2)}s` } as React.CSSProperties}
                 >
                   {letter === ' ' ? '\u00A0' : letter}
                 </span>

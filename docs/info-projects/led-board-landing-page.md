@@ -1,6 +1,12 @@
 ---
 appStoreId: 1602453466
 playStoreId: com.chuongdever.led_board
+features:
+  - Animated LED displays with 25+ custom fonts and colors
+  - 18+ real-time GLSL shader backgrounds & visual effects
+  - Export creations as GIF or video directly to your gallery
+  - Dynamic backgrounds — gradients, parallax rain, metaballs
+  - Multi-board mode with landscape display and screen lock
 ---
 
 # LED Board - Project Context Documentation

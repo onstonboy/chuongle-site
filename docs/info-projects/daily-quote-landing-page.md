@@ -2,6 +2,12 @@
 appStoreId: 6756311686
 playStoreId: com.cdev.daily_quote
 imageUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d7/c0/95/d7c09586-d0a7-70d4-b04f-1849387ab89f/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg"
+features:
+  - Quotes from Hinduism, Christianity, Islam, Buddhism & more
+  - 20+ topic categories with streak tracking and daily reminders
+  - Beautiful full-screen backgrounds from Pexels & Unsplash
+  - Favorites collection with search and topic filters
+  - Smart "More like this" recommendations for discovery
 ---
 
 # Daily Quote - Your Daily Dose of Inspiration 🌟

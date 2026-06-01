@@ -58,12 +58,10 @@ export class MarkdownFileDataSource {
     };
 
     const getFeatures = (): string[] => {
-      const extracted = this.extractFeatures(content);
-      if (extracted.length > 0) return extracted;
-      if (Array.isArray(data.features)) {
+      if (Array.isArray(data.features) && data.features.length > 0) {
         return data.features.filter((f): f is string => typeof f === 'string');
       }
-      return [];
+      return this.extractFeatures(content);
     };
 
     const getTechnologies = (): string[] => {
@@ -82,23 +80,20 @@ export class MarkdownFileDataSource {
                         typeof data.appStoreId === 'number' ? String(data.appStoreId) : null;
       
       if (appStoreId) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
         try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 5000);
-          
           const response = await fetch(`https://itunes.apple.com/lookup?id=${appStoreId}`, {
             signal: controller.signal,
             headers: {
               'User-Agent': 'Mozilla/5.0',
             },
           });
-          
-          clearTimeout(timeoutId);
-          
+
           if (response.ok) {
             const json = await response.json();
             if (json.results && json.results.length > 0) {
-              const artworkUrl = json.results[0].artworkUrl512 || 
+              const artworkUrl = json.results[0].artworkUrl512 ||
                                json.results[0].artworkUrl100?.replace('100x100bb', '512x512bb') ||
                                json.results[0].artworkUrl60?.replace('60x60bb', '512x512bb');
               if (artworkUrl) {
@@ -108,6 +103,8 @@ export class MarkdownFileDataSource {
           }
         } catch (error) {
           console.error(`Error fetching App Store image for ${appStoreId}:`, error);
+        } finally {
+          clearTimeout(timeoutId);
         }
       }
       
@@ -195,7 +192,9 @@ export class MarkdownFileDataSource {
       }
     }
 
-    return features.slice(0, 5);
+    return features
+      .slice(0, 5)
+      .map(f => f.replace(/\*\*/g, '').trim());
   }
 
   private extractLandingPageUrl(content: string): string {
@@ -218,8 +217,8 @@ export class MarkdownFileDataSource {
       return url;
     }
     
-    // If it's a domain (contains .chuongle.dev or similar), add https://
-    if (url.includes('.chuongle.dev') || url.includes('.')) {
+    const domainPattern = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z]{2,})+/;
+    if (domainPattern.test(url)) {
       return `https://${url}`;
     }
     

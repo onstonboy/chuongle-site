@@ -1,6 +1,12 @@
 ---
 appStoreId: 6475199122
 playStoreId: com.cdev.ai_caption
+features:
+  - AI captions in 50+ languages with 20+ genres and tones
+  - Smart image rating with AI-powered photography feedback
+  - AI image generation with 30+ artistic styles
+  - Background removal, text overlay & collage creator
+  - Music suggestions matched to your image's vibe
 ---
 
 # AI Caption - Your AI-Powered Social Media Companion
