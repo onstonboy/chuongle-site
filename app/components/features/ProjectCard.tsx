@@ -7,11 +7,16 @@ import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
   project: Project;
-  variant?: 'large' | 'medium' | 'small';
   index: number;
 }
 
-export default function ProjectCard({ project, variant = 'medium', index }: ProjectCardProps) {
+const CATEGORY_LABELS: Record<Project['category'], string> = {
+  mobile: 'Mobile',
+  web: 'Web',
+  both: 'Mobile & Web',
+};
+
+export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -28,18 +33,13 @@ export default function ProjectCard({ project, variant = 'medium', index }: Proj
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.1 }
     );
 
     observer.observe(currentRef);
-
-    return () => {
-      observer.unobserve(currentRef);
-    };
+    return () => observer.unobserve(currentRef);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -49,8 +49,8 @@ export default function ProjectCard({ project, variant = 'medium', index }: Proj
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
+    const rotateX = (y - centerY) / 12;
+    const rotateY = (centerX - x) / 12;
     setTilt({ x: rotateX, y: rotateY });
   };
 
@@ -61,63 +61,89 @@ export default function ProjectCard({ project, variant = 'medium', index }: Proj
   return (
     <article
       ref={cardRef}
-      className={`${styles.card} ${styles[variant]} ${isVisible ? styles.visible : ''}`}
+      className={`${styles.card} ${isVisible ? styles.visible : ''}`}
       style={{
-        animationDelay: `${index * 0.1}s`,
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-      }}
+        animationDelay: `${index * 0.06}s`,
+        '--tilt-x': `${tilt.x}deg`,
+        '--tilt-y': `${tilt.y}deg`,
+      } as React.CSSProperties}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={styles.imageContainer}>
-        {!imageError ? (
-          project.imageUrl.startsWith('http') ? (
-            <img
-              src={project.imageUrl}
-              alt={project.name}
-              width={400}
-              height={200}
-              className={styles.image}
-              loading={index < 3 ? 'eager' : 'lazy'}
-              onError={() => setImageError(true)}
-            />
+      <div className={styles.header}>
+        <div className={styles.iconWrap}>
+          {!imageError ? (
+            project.imageUrl.startsWith('http') ? (
+              <img
+                src={project.imageUrl}
+                alt=""
+                width={56}
+                height={56}
+                className={styles.icon}
+                loading={index < 4 ? 'eager' : 'lazy'}
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <Image
+                src={project.imageUrl}
+                alt=""
+                width={56}
+                height={56}
+                className={styles.icon}
+                loading={index < 4 ? 'eager' : 'lazy'}
+                onError={() => setImageError(true)}
+              />
+            )
           ) : (
-            <Image
-              src={project.imageUrl}
-              alt={project.name}
-              width={400}
-              height={200}
-              className={styles.image}
-              loading={index < 3 ? 'eager' : 'lazy'}
-              onError={() => setImageError(true)}
-            />
-          )
-        ) : (
-          <div className={styles.placeholder}>
-            <span>{project.name}</span>
-          </div>
-        )}
+            <div className={styles.iconPlaceholder}>
+              {project.name.charAt(0)}
+            </div>
+          )}
+        </div>
+
+        <span className={styles.category}>
+          {CATEGORY_LABELS[project.category]}
+        </span>
       </div>
-      <div className={styles.content}>
+
+      <div className={styles.body}>
         <h3 className={styles.title}>{project.name}</h3>
         <p className={styles.tagline}>{project.tagline}</p>
+
+        {project.description && (
+          <p className={styles.description}>{project.description}</p>
+        )}
+
         {project.features.length > 0 && (
           <ul className={styles.features}>
-            {project.features.slice(0, 3).map((feature, i) => (
-              <li key={i} className={styles.feature}>{feature}</li>
+            {project.features.slice(0, 2).map((feature, i) => (
+              <li key={i} className={styles.feature}>
+                {feature}
+              </li>
             ))}
           </ul>
         )}
-        <a
-          href={project.landingPageUrl}
-          className={styles.link}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View Project →
-        </a>
+
+        {project.technologies.length > 0 && (
+          <ul className={styles.tech}>
+            {project.technologies.slice(0, 3).map((tech) => (
+              <li key={tech} className={styles.techTag}>
+                {tech}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
+
+      <a
+        href={project.landingPageUrl}
+        className={styles.link}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Learn more
+        <span className={styles.arrow} aria-hidden="true">→</span>
+      </a>
     </article>
   );
 }
-

@@ -1,6 +1,11 @@
 ---
 appStoreId: 1616525097
 playStoreId: com.chuongdever.luckycard
+category: mobile
+technologies:
+  - Flutter
+  - Gemini AI
+  - Firebase
 features:
   - AI-powered card deck generation with 12+ exciting topics
   - Custom deck creator — build your own questions and dares

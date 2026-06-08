@@ -1,6 +1,11 @@
 ---
 appStoreId: 1602453466
 playStoreId: com.chuongdever.led_board
+category: mobile
+technologies:
+  - Flutter
+  - GLSL Shaders
+  - Dart
 features:
   - Animated LED displays with 25+ custom fonts and colors
   - 18+ real-time GLSL shader backgrounds & visual effects

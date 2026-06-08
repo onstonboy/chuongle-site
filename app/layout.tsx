@@ -12,11 +12,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'CDev - Portfolio',
-  description: 'Portfolio of Chuong Dev - Showcasing innovative mobile and web applications',
+  title: 'CDev — Independent Mobile Apps',
+  description:
+    'CDev builds privacy-first utilities, AI-powered tools, and creative apps for iOS and Android.',
   openGraph: {
-    title: 'CDev - Portfolio',
-    description: 'Portfolio of Chuong Dev - Showcasing innovative mobile and web applications',
+    title: 'CDev — Independent Mobile Apps',
+    description:
+      'CDev builds privacy-first utilities, AI-powered tools, and creative apps for iOS and Android.',
     type: 'website',
   },
 };

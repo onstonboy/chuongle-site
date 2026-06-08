@@ -1,51 +1,75 @@
+import SectionHeader from '@/app/components/ui/SectionHeader';
+import { SITE } from '@/app/lib/site';
 import styles from './About.module.css';
 
 export default function About() {
-  const skills = [
-    'Next.js',
-    'React',
-    'TypeScript',
-    'Flutter',
-    'Firebase',
-    'Node.js',
-    'UI/UX Design',
-  ];
-
   return (
     <section id="about" className={styles.about}>
       <div className={styles.container}>
-        <div>
-          <h2 className={styles.heading}>About</h2>
-          <p className={styles.text}>
-            I&apos;m a passionate developer focused on creating innovative mobile and web applications.
-            With expertise in modern frameworks and technologies, I build user-friendly solutions
-            that solve real-world problems.
-          </p>
-          <p className={styles.text}>
-            My work spans across mobile app development, web applications, and UI/UX design,
-            always prioritizing user experience and performance.
-          </p>
+        <SectionHeader
+          eyebrow="About"
+          title={`Who is ${SITE.name}?`}
+          description={`${SITE.name} is the indie studio of ${SITE.founder} — designing, building, and shipping mobile apps since 2022. Every app is built end-to-end: product design, development, and store publishing.`}
+        />
+
+        <div className={styles.focusGrid}>
+          {SITE.focusAreas.map((area) => (
+            <article key={area.title} className={styles.focusCard}>
+              <h3 className={styles.focusTitle}>{area.title}</h3>
+              <p className={styles.focusText}>{area.description}</p>
+            </article>
+          ))}
         </div>
-        <div>
-          <h3 className={styles.subheading}>Skills</h3>
-          <ul className={styles.skills}>
-            {skills.map((skill) => (
-              <li key={skill} className={styles.skill}>
-                {skill}
-              </li>
-            ))}
-          </ul>
-          <div id="contact" className={styles.contact}>
-            <h3 className={styles.subheading}>Contact</h3>
-            <p>
-              <a href="mailto:chuongdev97@gmail.com" className={styles.email}>
-                chuongdev97@gmail.com
-              </a>
+
+        <div className={styles.bottom}>
+          <div className={styles.techSection}>
+            <h3 className={styles.subheading}>Tech stack</h3>
+            <div className={styles.techGroups}>
+              {SITE.techGroups.map((group) => (
+                <div key={group.label} className={styles.techGroup}>
+                  <p className={styles.techLabel}>{group.label}</p>
+                  <ul className={styles.techList}>
+                    {group.items.map((item) => (
+                      <li key={item} className={styles.techItem}>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div id="contact" className={styles.contactSection}>
+            <h3 className={styles.subheading}>Get in touch</h3>
+            <p className={styles.contactText}>
+              Questions about our apps, partnerships, or custom development?
+              Reach out directly.
             </p>
+            <a href={`mailto:${SITE.email}`} className={styles.email}>
+              {SITE.email}
+            </a>
+            <div className={styles.storeLinks}>
+              <a
+                href={SITE.appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.storeLink}
+              >
+                App Store
+              </a>
+              <a
+                href={SITE.playStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.storeLink}
+              >
+                Google Play
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

@@ -1,7 +1,15 @@
 import { unstable_cache } from 'next/cache';
 import gplay from 'google-play-scraper';
 
+export interface StoreStats {
+  apps: number;
+  ratings: number;
+  downloads: number;
+}
+
 export interface AppStats {
+  apple: StoreStats;
+  google: StoreStats;
   totalApps: number;
   totalDownloads: number;
   totalRatings: number;
@@ -12,19 +20,17 @@ export interface AppStats {
 const APPLE_DEV_ID = '1602451499';
 const GOOGLE_DEV_ID = '6296625987520320887';
 
-/**
- * Older apps registered under a different package prefix that don't appear
- * in the developer listing endpoint but are still live on Google Play.
- */
 const SUPPLEMENTAL_PLAY_IDS = [
   'com.chuongdever.led_board',
   'com.chuongdever.score_counter',
   'com.chuongdever.luckycard',
+  'com.cdev.ai_caption',
 ];
 
 const STARTED_YEAR = 2022;
-const APPLE_TIMEOUT_MS = 10_000;
-const GOOGLE_TIMEOUT_MS = 8_000;
+const APPLE_TIMEOUT_MS = 12_000;
+const GOOGLE_TIMEOUT_MS = 20_000;
+const GOOGLE_BATCH_SIZE = 5;
 
 interface ItunesApp {
   wrapperType?: string;
@@ -35,7 +41,7 @@ interface ItunesResponse {
   results: ItunesApp[];
 }
 
-async function fetchAppleStats(): Promise<{ apps: number; ratings: number }> {
+async function fetchAppleStatsInner(): Promise<StoreStats> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), APPLE_TIMEOUT_MS);
 
@@ -45,7 +51,6 @@ async function fetchAppleStats(): Promise<{ apps: number; ratings: number }> {
       {
         signal: controller.signal,
         headers: { 'User-Agent': 'Mozilla/5.0' },
-        next: { revalidate: 3600 },
       }
     );
 
@@ -56,14 +61,50 @@ async function fetchAppleStats(): Promise<{ apps: number; ratings: number }> {
     const apps = json.results.filter((r) => r.wrapperType === 'software');
     const ratings = apps.reduce((sum, a) => sum + (a.userRatingCount ?? 0), 0);
 
-    return { apps: apps.length, ratings };
+    return { apps: apps.length, ratings, downloads: 0 };
   } catch {
     clearTimeout(timeoutId);
-    return { apps: 0, ratings: 0 };
+    return { apps: 0, ratings: 0, downloads: 0 };
   }
 }
 
-async function fetchGoogleStatsInner(): Promise<{ ratings: number; downloads: number }> {
+const getCachedAppleStats = unstable_cache(
+  fetchAppleStatsInner,
+  ['apple-store-stats'],
+  { revalidate: 3600, tags: ['store-stats'] }
+);
+
+async function fetchAppleStats(): Promise<StoreStats> {
+  const deadline = new Promise<StoreStats>((resolve) =>
+    setTimeout(() => resolve({ apps: 0, ratings: 0, downloads: 0 }), APPLE_TIMEOUT_MS)
+  );
+  return Promise.race([getCachedAppleStats(), deadline]);
+}
+
+async function fetchPlayAppDetails(
+  appIds: string[]
+): Promise<{ ratings: number; downloads: number }> {
+  let ratings = 0;
+  let downloads = 0;
+
+  for (let i = 0; i < appIds.length; i += GOOGLE_BATCH_SIZE) {
+    const batch = appIds.slice(i, i + GOOGLE_BATCH_SIZE);
+    const results = await Promise.allSettled(
+      batch.map((appId) => gplay.app({ appId, lang: 'en', country: 'us' }))
+    );
+
+    for (const result of results) {
+      if (result.status === 'fulfilled') {
+        ratings += result.value.ratings ?? 0;
+        downloads += result.value.minInstalls ?? 0;
+      }
+    }
+  }
+
+  return { ratings, downloads };
+}
+
+async function fetchGoogleStatsInner(): Promise<StoreStats> {
   const listedApps = await gplay.developer({
     devId: GOOGLE_DEV_ID,
     num: 100,
@@ -73,22 +114,13 @@ async function fetchGoogleStatsInner(): Promise<{ ratings: number; downloads: nu
 
   const listedIds = listedApps.map((a) => a.appId);
   const allIds = Array.from(new Set([...listedIds, ...SUPPLEMENTAL_PLAY_IDS]));
+  const { ratings, downloads } = await fetchPlayAppDetails(allIds);
 
-  const results = await Promise.allSettled(
-    allIds.map((appId) => gplay.app({ appId, lang: 'en', country: 'us' }))
-  );
-
-  let ratings = 0;
-  let downloads = 0;
-
-  for (const result of results) {
-    if (result.status === 'fulfilled') {
-      ratings += result.value.ratings ?? 0;
-      downloads += result.value.minInstalls ?? 0;
-    }
-  }
-
-  return { ratings, downloads };
+  return {
+    apps: allIds.length,
+    ratings,
+    downloads,
+  };
 }
 
 const getCachedGoogleStats = unstable_cache(
@@ -97,27 +129,35 @@ const getCachedGoogleStats = unstable_cache(
   { revalidate: 3600, tags: ['store-stats'] }
 );
 
-async function fetchGoogleStats(): Promise<{ ratings: number; downloads: number }> {
-  const deadline = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('Google Play timeout')), GOOGLE_TIMEOUT_MS)
+async function fetchGoogleStats(): Promise<StoreStats> {
+  const deadline = new Promise<StoreStats>((resolve) =>
+    setTimeout(
+      () => resolve({ apps: 0, ratings: 0, downloads: 0 }),
+      GOOGLE_TIMEOUT_MS
+    )
   );
-  try {
-    return await Promise.race([getCachedGoogleStats(), deadline]);
-  } catch {
-    return { ratings: 0, downloads: 0 };
-  }
+  return Promise.race([getCachedGoogleStats(), deadline]);
 }
 
 export async function getAppStats(): Promise<AppStats> {
   const yearsBuilding = new Date().getFullYear() - STARTED_YEAR;
 
-  const [apple, google] = await Promise.all([fetchAppleStats(), fetchGoogleStats()]);
+  const [apple, google] = await Promise.all([
+    fetchAppleStats(),
+    fetchGoogleStats(),
+  ]);
+
+  const hasAppleData = apple.apps > 0 || apple.ratings > 0;
+  const hasGoogleData =
+    google.apps > 0 || google.downloads > 0 || google.ratings > 0;
 
   return {
-    totalApps: apple.apps,
+    apple,
+    google,
+    totalApps: Math.max(apple.apps, google.apps),
     totalDownloads: google.downloads,
     totalRatings: apple.ratings + google.ratings,
     yearsBuilding,
-    isPartial: apple.apps === 0,
+    isPartial: !hasAppleData && !hasGoogleData,
   };
 }

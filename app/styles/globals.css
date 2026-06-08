@@ -5,38 +5,34 @@
 }
 
 :root {
-  /* Gradient Colors */
-  --gradient-purple: #7C3AED;
-  --gradient-blue: #3B82F6;
-  --gradient-cyan: #06B6D4;
-  --gradient-magenta: #EC4899;
-  --gradient-indigo: #6366F1;
+  --color-accent: #818CF8;
+  --color-accent-muted: rgba(129, 140, 248, 0.12);
 
-  /* Primary Colors */
   --color-primary: #6366F1;
   --color-primary-light: #818CF8;
   --color-primary-dark: #4F46E5;
-  --color-accent: #EC4899;
-  --color-accent-light: #F472B6;
-  --color-accent-dark: #DB2777;
 
-  /* Background (Dark for gradient) */
-  --color-background: #0F172A;
-  --color-background-alt: #1E293B;
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #CBD5E1;
-  --color-text-muted: #94A3B8;
-  --color-border: #334155;
+  --color-background: #09090B;
+  --color-surface: #18181B;
+  --color-surface-raised: #27272A;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  --color-text-primary: #FAFAFA;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #71717A;
 
   --font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  --font-size-display: 4.5rem;
-  --font-size-h1: 3rem;
-  --font-size-h2: 2.25rem;
-  --font-size-h3: 1.875rem;
-  --font-size-h4: 1.5rem;
+  --font-size-display: 3.5rem;
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.5rem;
+  --font-size-h4: 1.25rem;
   --font-size-body: 1rem;
   --font-size-body-small: 0.875rem;
+
   --font-weight-bold: 700;
+  --font-weight-medium: 500;
   --font-weight-regular: 400;
 
   --spacing-xs: 0.25rem;
@@ -49,22 +45,24 @@
   --spacing-4xl: 6rem;
   --spacing-5xl: 8rem;
 
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.6), 0 12px 24px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.5);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
 
-  --radius-sm: 0.25rem;
+  --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+
+  --section-max-width: 1120px;
+  --section-padding-x: var(--spacing-xl);
 }
 
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-body);
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--color-text-primary);
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
@@ -82,41 +80,10 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes letterBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-

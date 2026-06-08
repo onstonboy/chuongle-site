@@ -1,12 +1,11 @@
 .hero {
-  min-height: 100vh;
   position: relative;
+  z-index: 1;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   overflow: visible;
-  z-index: 1;
 }
 
 .heroWrapper {
@@ -15,57 +14,37 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: visible;
+  padding: var(--spacing-4xl) var(--section-padding-x) var(--spacing-3xl);
 }
 
 .bannerBackground {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: visible;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
 }
 
 .bannerOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 120%;
+  inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(15, 23, 42, 0.5) 0%,
-    rgba(15, 23, 42, 0.4) 20%,
-    rgba(15, 23, 42, 0.25) 40%,
-    rgba(15, 23, 42, 0.1) 60%,
-    rgba(15, 23, 42, 0.03) 80%,
-    transparent 100%
+    rgba(9, 9, 11, 0.7) 0%,
+    rgba(9, 9, 11, 0.5) 40%,
+    rgba(9, 9, 11, 0.85) 100%
   );
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
 }
 
 .bannerImage {
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.5) contrast(1.1);
-  opacity: 0.6;
+  filter: brightness(0.45) contrast(1.05);
+  opacity: 0.55;
   animation: bannerParallax 20s ease-in-out infinite;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 70%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 70%,
-    transparent 100%
-  );
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
 }
 
 .bannerGlow {
@@ -77,8 +56,7 @@
   height: 120%;
   background: radial-gradient(
     ellipse at center,
-    rgba(99, 102, 241, 0.15) 0%,
-    rgba(236, 72, 153, 0.1) 30%,
+    rgba(99, 102, 241, 0.12) 0%,
     transparent 70%
   );
   animation: glowPulse 4s ease-in-out infinite;
@@ -86,18 +64,133 @@
   pointer-events: none;
 }
 
-.heroContent {
+.inner {
   position: relative;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-3xl);
   width: 100%;
-  max-width: 1400px;
-  padding: var(--spacing-5xl) var(--spacing-xl);
-  text-align: center;
+  max-width: var(--section-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+.content {
+  max-width: 600px;
+}
+
+.eyebrow {
+  font-size: var(--font-size-body-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-lg);
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.headline {
+  font-size: clamp(2.25rem, 5vw, var(--font-size-display));
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.letter {
+  display: inline-block;
+}
+
+.letterAnimated {
+  animation: letterBounce 2s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.description {
+  font-size: var(--font-size-body);
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: var(--spacing-xl);
+  animation: fadeInUp 0.6s ease-out 0.35s both;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+  animation: fadeInUp 0.6s ease-out 0.45s both;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: var(--font-size-body-small);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+}
+
+.primaryBtn:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: var(--font-size-body-small);
+  text-decoration: none;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--color-text-muted);
+  background: var(--color-surface);
+  transform: translateY(-2px);
+}
+
+.platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  list-style: none;
+  animation: fadeInUp 0.6s ease-out 0.55s both;
+}
+
+.platform {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.platform:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.visual {
+  display: flex;
+  justify-content: center;
 }
 
 .logoFloating {
@@ -106,7 +199,7 @@
   align-items: center;
   justify-content: center;
   animation: logoFloat 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.6));
+  filter: drop-shadow(0 0 32px rgba(99, 102, 241, 0.45));
 }
 
 .logoGlow {
@@ -118,8 +211,8 @@
   height: 150%;
   background: radial-gradient(
     circle,
-    rgba(99, 102, 241, 0.4) 0%,
-    rgba(236, 72, 153, 0.3) 40%,
+    rgba(99, 102, 241, 0.35) 0%,
+    rgba(129, 140, 248, 0.2) 40%,
     transparent 70%
   );
   border-radius: 50%;
@@ -130,46 +223,42 @@
 
 .logoWrapper {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  border: 4px solid rgba(99, 102, 241, 0.6);
-  padding: 0;
-  background: rgba(15, 23, 42, 0.5);
+  border: 3px solid rgba(99, 102, 241, 0.5);
+  background: rgba(24, 24, 27, 0.6);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 
-    0 0 20px rgba(99, 102, 241, 0.4),
-    inset 0 0 20px rgba(99, 102, 241, 0.1);
+  box-shadow:
+    0 0 24px rgba(99, 102, 241, 0.35),
+    inset 0 0 20px rgba(99, 102, 241, 0.08);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 2;
 }
 
 .logoFloating:hover .logoWrapper {
-  border-color: rgba(99, 102, 241, 1);
-  box-shadow: 
-    0 0 30px rgba(99, 102, 241, 0.6),
-    0 0 15px rgba(236, 72, 153, 0.4),
-    inset 0 0 25px rgba(99, 102, 241, 0.2);
+  border-color: rgba(129, 140, 248, 0.9);
+  box-shadow:
+    0 0 36px rgba(99, 102, 241, 0.55),
+    inset 0 0 24px rgba(99, 102, 241, 0.15);
 }
 
 .logo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
+  object-fit: cover;
   border-radius: 50%;
-  filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.8));
   animation: logoScale 4s ease-in-out infinite;
   transition: transform 0.3s ease;
 }
 
 .logoFloating:hover .logo {
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
 .logoRing {
@@ -179,7 +268,7 @@
   transform: translate(-50%, -50%);
   width: 120%;
   height: 120%;
-  border: 2px solid rgba(99, 102, 241, 0.3);
+  border: 2px solid rgba(99, 102, 241, 0.25);
   border-radius: 50%;
   animation: logoRingRotate 8s linear infinite;
   z-index: 1;
@@ -193,68 +282,27 @@
   left: 50%;
   width: 4px;
   height: 4px;
-  background: var(--color-primary-light);
+  background: var(--color-accent);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--color-primary-light);
-  animation: logoRingDot 8s linear infinite;
+  box-shadow: 0 0 10px var(--color-accent);
 }
 
-.textContent {
+.titleFallback {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-lg);
-  max-width: 700px;
-  animation: fadeInUp 0.8s ease-out 0.4s both;
+  gap: 0.05em;
 }
 
-.titleContainer {
-  display: flex;
-  gap: 0.1em;
-  margin-bottom: var(--spacing-lg);
-}
-
-.letter {
-  font-size: 5rem;
+.fallbackLetter {
+  font-size: 4rem;
   font-weight: 700;
   color: var(--color-text-primary);
   display: inline-block;
-  animation: letterBounce 1s ease-in-out infinite;
+  text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.fallbackLetter.letterAnimated {
+  animation: letterBounce 1.2s ease-in-out infinite;
   animation-delay: var(--delay, 0s);
-  text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
-  line-height: 1.2;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.letter.visible {
-  opacity: 1;
-}
-
-.tagline {
-  font-size: var(--font-size-h2);
-  color: var(--color-text-primary);
-  font-weight: 600;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.3);
-  line-height: 1.3;
-  background: linear-gradient(
-    135deg,
-    var(--color-text-primary) 0%,
-    var(--color-primary-light) 50%,
-    var(--color-accent-light) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientShift 3s ease-in-out infinite;
-}
-
-.description {
-  font-size: var(--font-size-body);
-  color: var(--color-text-secondary);
-  line-height: 1.75;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .scrollIndicator {
@@ -267,23 +315,23 @@
 }
 
 .mouse {
-  width: 30px;
-  height: 50px;
-  border: 2px solid var(--color-text-secondary);
-  border-radius: 15px;
+  width: 28px;
+  height: 46px;
+  border: 2px solid var(--color-text-muted);
+  border-radius: 14px;
   position: relative;
 }
 
 .wheel {
   width: 4px;
   height: 8px;
-  background: var(--color-text-secondary);
+  background: var(--color-text-muted);
   border-radius: 2px;
   position: absolute;
   top: 8px;
   left: 50%;
   transform: translateX(-50%);
-  animation: float 1.5s ease-in-out infinite;
+  animation: wheelScroll 1.5s ease-in-out infinite;
 }
 
 @keyframes bannerParallax {
@@ -291,18 +339,18 @@
     transform: scale(1) translateY(0);
   }
   50% {
-    transform: scale(1.05) translateY(-20px);
+    transform: scale(1.04) translateY(-16px);
   }
 }
 
 @keyframes glowPulse {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.5;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.08);
   }
 }
 
@@ -311,21 +359,21 @@
     transform: translateY(0) rotate(0deg);
   }
   33% {
-    transform: translateY(-15px) rotate(1deg);
+    transform: translateY(-14px) rotate(1deg);
   }
   66% {
-    transform: translateY(5px) rotate(-1deg);
+    transform: translateY(6px) rotate(-1deg);
   }
 }
 
 @keyframes logoGlowPulse {
   0%, 100% {
-    opacity: 0.5;
+    opacity: 0.45;
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1.15);
   }
 }
 
@@ -347,28 +395,19 @@
   }
 }
 
-@keyframes logoRingDot {
-  0% {
-    transform: translateX(-50%) rotate(0deg) translateX(calc(50% + 0px));
-  }
-  100% {
-    transform: translateX(-50%) rotate(360deg) translateX(calc(50% + 0px));
-  }
-}
-
-@keyframes gradientShift {
+@keyframes letterBounce {
   0%, 100% {
-    background-position: 0% 50%;
+    transform: translateY(0);
   }
   50% {
-    background-position: 100% 50%;
+    transform: translateY(-6px);
   }
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -376,74 +415,64 @@
   }
 }
 
-@keyframes letterBounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 @keyframes float {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateX(-50%) translateY(-8px);
   }
 }
 
-@media (max-width: 1024px) {
-  .heroContent {
+@keyframes wheelScroll {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
     gap: var(--spacing-2xl);
-    padding: var(--spacing-4xl) var(--spacing-lg);
+  }
+
+  .visual {
+    order: -1;
   }
 
   .logoWrapper {
-    width: 220px;
-    height: 220px;
-  }
-
-  .tagline {
-    font-size: var(--font-size-h3);
+    width: 140px;
+    height: 140px;
   }
 }
 
 @media (max-width: 767px) {
-  .hero {
-    min-height: 100vh;
+  .heroWrapper {
+    min-height: auto;
+    padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-4xl);
   }
 
-  .heroContent {
-    gap: var(--spacing-xl);
-    padding: var(--spacing-3xl) var(--spacing-lg);
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .logoWrapper {
-    width: 180px;
-    height: 180px;
-  }
-
-  .logoRing {
-    width: 110%;
-    height: 110%;
-  }
-
-  .letter {
-    font-size: 3.5rem;
-  }
-
-  .tagline {
-    font-size: var(--font-size-h4);
-  }
-
-  .description {
-    font-size: var(--font-size-body-small);
+  .primaryBtn,
+  .secondaryBtn {
+    justify-content: center;
   }
 
   .bannerImage {
     animation: none;
+  }
+
+  .fallbackLetter {
+    font-size: 3rem;
   }
 }
 
@@ -454,8 +483,12 @@
   .logoGlow,
   .logo,
   .logoRing,
-  .logoRing::before,
-  .tagline {
-    animation: none;
+  .letter,
+  .fallbackLetter,
+  .scrollIndicator,
+  .wheel,
+  .letterAnimated,
+  .fallbackLetter.letterAnimated {
+    animation: none !important;
   }
 }

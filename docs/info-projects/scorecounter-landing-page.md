@@ -1,6 +1,11 @@
 ---
 appStoreId: 1667458517
 playStoreId: com.chuongdever.score_counter
+category: mobile
+technologies:
+  - Flutter
+  - QR Sharing
+  - Offline-first
 features:
   - Real-time score sharing via QR code — play together remotely
   - Unlimited players with custom avatars and colors

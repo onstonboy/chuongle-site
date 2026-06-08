@@ -1,6 +1,11 @@
 ---
 appStoreId: 6475199122
 playStoreId: com.cdev.ai_caption
+category: mobile
+technologies:
+  - Flutter
+  - Gemini AI
+  - Firebase
 features:
   - AI captions in 50+ languages with 20+ genres and tones
   - Smart image rating with AI-powered photography feedback

@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
+import gplay from 'google-play-scraper';
 import { Project } from '../types';
 
 export class MarkdownFileDataSource {
@@ -36,25 +37,38 @@ export class MarkdownFileDataSource {
     }
   }
 
-  private async parseProject(file: string, data: Record<string, unknown>, content: string): Promise<Project> {
+  private async parseProject(
+    file: string,
+    data: Record<string, unknown>,
+    content: string
+  ): Promise<Project | null> {
+    if (data.portfolio === false) return null;
+
     const getName = (): string => {
+      if (typeof data.name === 'string') return data.name;
       const extracted = this.extractName(content);
       if (extracted) return extracted;
-      if (typeof data.name === 'string') return data.name;
       return 'Untitled Project';
     };
 
     const getTagline = (): string => {
+      if (typeof data.tagline === 'string') return data.tagline;
       const extracted = this.extractTagline(content);
       if (extracted) return extracted;
-      if (typeof data.tagline === 'string') return data.tagline;
       return '';
     };
 
+    const getDescription = (): string => {
+      if (typeof data.description === 'string') return data.description;
+      return this.extractDescription(content);
+    };
+
     const getLandingPageUrl = (): string => {
+      if (typeof data.landingPageUrl === 'string') {
+        return this.normalizeUrl(data.landingPageUrl);
+      }
       const extracted = this.extractLandingPageUrl(content);
-      const url = extracted || (typeof data.landingPageUrl === 'string' ? data.landingPageUrl : '');
-      return this.normalizeUrl(url);
+      return this.normalizeUrl(extracted);
     };
 
     const getFeatures = (): string[] => {
@@ -110,10 +124,20 @@ export class MarkdownFileDataSource {
       
       const playStoreId = typeof data.playStoreId === 'string' ? data.playStoreId : null;
       if (playStoreId) {
-        return `https://play-lh.googleusercontent.com/${playStoreId}=w512-h512`;
+        try {
+          const app = await gplay.app({
+            appId: playStoreId,
+            lang: 'en',
+            country: 'us',
+          });
+          if (app.icon) return app.icon;
+        } catch (error) {
+          console.error(`Error fetching Play Store image for ${playStoreId}:`, error);
+        }
       }
-      
-      return `/images/${file.replace('.md', '')}.jpg`;
+
+      const slug = typeof data.id === 'string' ? data.id : file.replace('.md', '');
+      return `/images/${slug}.png`;
     };
 
     const getCategory = (): 'mobile' | 'web' | 'both' => {
@@ -123,14 +147,17 @@ export class MarkdownFileDataSource {
       return 'both';
     };
 
+    const landingPageUrl = getLandingPageUrl();
+    if (!landingPageUrl || landingPageUrl === '#') return null;
+
     const imageUrl = await getImageUrl();
 
     return {
-      id: file.replace('.md', ''),
+      id: typeof data.id === 'string' ? data.id : file.replace('.md', ''),
       name: getName(),
       tagline: getTagline(),
-      description: this.extractDescription(content),
-      landingPageUrl: getLandingPageUrl(),
+      description: getDescription(),
+      landingPageUrl,
       features: getFeatures(),
       technologies: getTechnologies(),
       imageUrl: imageUrl,

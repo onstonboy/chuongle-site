@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { SITE } from '@/app/lib/site';
 import styles from './Hero.module.css';
 
 const BANNER_PATH = '/images/banner.png';
@@ -9,97 +11,127 @@ const LOGO_PATH = '/images/logo.png';
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
-  const [hasBanner, setHasBanner] = useState(false);
-  const [hasLogo, setHasLogo] = useState(false);
+  const [bannerError, setBannerError] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    
-    const checkBanner = () => {
-      const img = new window.Image();
-      img.onload = () => setHasBanner(true);
-      img.onerror = () => setHasBanner(false);
-      img.src = BANNER_PATH;
-    };
-
-    const checkLogo = () => {
-      const img = new window.Image();
-      img.onload = () => setHasLogo(true);
-      img.onerror = () => setHasLogo(false);
-      img.src = LOGO_PATH;
-    };
-
-    checkBanner();
-    checkLogo();
   }, []);
 
-  const title = 'CDev';
-  const letters = title.split('');
+  const headlineLetters = SITE.headline.split('');
 
   return (
     <section id="home" className={styles.hero}>
       <div className={styles.heroWrapper}>
-        {hasBanner && (
+        {!bannerError && (
           <div className={styles.bannerBackground}>
-            <div className={styles.bannerOverlay}></div>
+            <div className={styles.bannerOverlay} />
             <Image
               src={BANNER_PATH}
-              alt="Portfolio Banner"
+              alt=""
               fill
               className={styles.bannerImage}
               priority
               quality={90}
               sizes="100vw"
+              onError={() => setBannerError(true)}
             />
-            <div className={styles.bannerGlow}></div>
+            <div className={styles.bannerGlow} />
           </div>
         )}
-        
-        <div className={styles.heroContent}>
-          {hasLogo ? (
-            <div className={styles.logoFloating}>
-              <div className={styles.logoGlow}></div>
-              <div className={styles.logoWrapper}>
-                <Image
-                  src={LOGO_PATH}
-                  alt="Logo"
-                  width={280}
-                  height={280}
-                  className={styles.logo}
-                  priority
-                />
-              </div>
-              <div className={styles.logoRing}></div>
-            </div>
-          ) : (
-            <div className={styles.titleContainer}>
-              {letters.map((letter, index) => (
+
+        <div className={styles.inner}>
+          <div className={styles.content}>
+            <p className={styles.eyebrow}>
+              {SITE.founder} · {SITE.tagline}
+            </p>
+
+            <h1 className={styles.headline}>
+              {headlineLetters.map((letter, index) => (
                 <span
                   key={index}
-                  className={`${styles.letter} ${mounted ? styles.visible : ''}`}
-                  style={{ '--delay': `${(index * 0.1).toFixed(2)}s` } as React.CSSProperties}
+                  className={`${styles.letter} ${mounted ? styles.letterAnimated : ''}`}
+                  style={
+                    { '--delay': `${(index * 0.04).toFixed(2)}s` } as React.CSSProperties
+                  }
                 >
                   {letter === ' ' ? '\u00A0' : letter}
                 </span>
               ))}
+            </h1>
+
+            <p className={styles.description}>{SITE.description}</p>
+
+            <div className={styles.actions}>
+              <Link href="#projects" className={styles.primaryBtn}>
+                Browse apps
+              </Link>
+              <a
+                href={SITE.appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.secondaryBtn}
+              >
+                App Store
+              </a>
+              <a
+                href={SITE.playStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.secondaryBtn}
+              >
+                Google Play
+              </a>
             </div>
-          )}
-          
-          <div className={styles.textContent}>
-            <p className={styles.tagline}>
-              Building Innovative Mobile & Web Applications
-            </p>
-            <p className={styles.description}>
-              Passionate developer creating user-friendly applications with modern technologies.
-              Explore my projects below.
-            </p>
+
+            <ul className={styles.platforms} aria-label="Platforms">
+              {SITE.platforms.map((platform) => (
+                <li key={platform} className={styles.platform}>
+                  {platform}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.visual}>
+            {!logoError ? (
+              <div className={styles.logoFloating}>
+                <div className={styles.logoGlow} />
+                <div className={styles.logoWrapper}>
+                  <Image
+                    src={LOGO_PATH}
+                    alt={`${SITE.name} logo`}
+                    width={200}
+                    height={200}
+                    className={styles.logo}
+                    priority
+                    onError={() => setLogoError(true)}
+                  />
+                </div>
+                <div className={styles.logoRing} />
+              </div>
+            ) : (
+              <div className={styles.titleFallback}>
+                {SITE.name.split('').map((letter, index) => (
+                  <span
+                    key={index}
+                    className={`${styles.fallbackLetter} ${mounted ? styles.letterAnimated : ''}`}
+                    style={
+                      { '--delay': `${(index * 0.1).toFixed(2)}s` } as React.CSSProperties
+                    }
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
-      
+
       <div className={styles.scrollIndicator}>
         <div className={styles.mouse}>
-          <div className={styles.wheel}></div>
+          <div className={styles.wheel} />
         </div>
       </div>
     </section>

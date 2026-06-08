@@ -1,6 +1,11 @@
 ---
 appStoreId: 6760220410
 playStoreId: com.cdev.maskshot
+category: mobile
+technologies:
+  - Flutter
+  - On-device OCR
+  - Biometrics
 imageUrl: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/f5/0a/c0f50a1d-375b-8eff-bf63-19e3cd54d101/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg
 features:
   - On-device OCR detects emails, tokens, API keys, credit cards & more
