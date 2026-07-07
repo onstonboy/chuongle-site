@@ -9,6 +9,7 @@ const PROJECT_DISPLAY_ORDER: string[] = [
   'led-board-landing-page',
   'daily-quote-landing-page',
   'lucky-card-landing-page',
+  'lucky-wheel-landing-page',
 ];
 
 let repository: ProjectRepositoryImpl | null = null;
