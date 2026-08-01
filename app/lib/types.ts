@@ -8,6 +8,13 @@ export interface Project {
   technologies: string[];
   imageUrl: string;
   category: 'mobile' | 'web' | 'both';
+  appStoreId?: string;
+  playStoreId?: string;
+  downloads?: number;
+  rating?: number;
+  ratingCount?: number;
+  isRecommended?: boolean;
+  isSpotlight?: boolean;
 }
 
 export interface ContactInfo {

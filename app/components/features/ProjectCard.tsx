@@ -1,6 +1,7 @@
 'use client';
 
 import { Project } from '@/app/lib/types';
+import { formatDownloads, formatRating } from '@/app/lib/format-metrics';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styles from './ProjectCard.module.css';
@@ -58,10 +59,23 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     setTilt({ x: 0, y: 0 });
   };
 
+  const downloadsLabel = formatDownloads(project.downloads ?? 0);
+  const ratingLabel = formatRating(project.rating ?? 0);
+  const hasStats = Boolean(downloadsLabel || ratingLabel);
+  const isHighlighted = project.isRecommended || project.isSpotlight;
+  const bannerLabel = project.isRecommended
+    ? 'Recommended'
+    : project.isSpotlight
+      ? 'Also try'
+      : null;
+  const ctaLabel = isHighlighted ? 'Try this app' : 'Learn more';
+
   return (
     <article
       ref={cardRef}
-      className={`${styles.card} ${isVisible ? styles.visible : ''}`}
+      className={`${styles.card} ${isVisible ? styles.visible : ''} ${
+        project.isRecommended ? styles.recommended : ''
+      } ${project.isSpotlight ? styles.spotlight : ''}`}
       style={{
         animationDelay: `${index * 0.06}s`,
         '--tilt-x': `${tilt.x}deg`,
@@ -70,6 +84,18 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {bannerLabel && (
+        <div
+          className={
+            project.isRecommended
+              ? styles.recommendedBanner
+              : styles.spotlightBanner
+          }
+        >
+          {bannerLabel}
+        </div>
+      )}
+
       <div className={styles.header}>
         <div className={styles.iconWrap}>
           {!imageError ? (
@@ -110,6 +136,26 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <h3 className={styles.title}>{project.name}</h3>
         <p className={styles.tagline}>{project.tagline}</p>
 
+        {hasStats && (
+          <p className={styles.stats} aria-label="Store performance">
+            {downloadsLabel && (
+              <span className={styles.stat}>
+                <span className={styles.statValue}>{downloadsLabel}</span>
+                <span className={styles.statLabel}>downloads</span>
+              </span>
+            )}
+            {downloadsLabel && ratingLabel && (
+              <span className={styles.statDivider} aria-hidden="true" />
+            )}
+            {ratingLabel && (
+              <span className={styles.stat}>
+                <span className={styles.statValue}>{ratingLabel}</span>
+                <span className={styles.statLabel}>rating</span>
+              </span>
+            )}
+          </p>
+        )}
+
         {project.description && (
           <p className={styles.description}>{project.description}</p>
         )}
@@ -141,7 +187,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Learn more
+        {ctaLabel}
         <span className={styles.arrow} aria-hidden="true">→</span>
       </a>
     </article>

@@ -4,7 +4,7 @@ id: pumbaby
 name: PumBaby
 tagline: Gentle tracking for tired parents.
 description: Log feeding, sleep, diapers, and more in under 2 seconds — even one-handed in the dark. Local-first baby tracking that respects your privacy.
-landingPageUrl: https://pumbaby.app
+landingPageUrl: https://pumbaby.chuongle.dev
 playStoreId: com.cdev.pumbaby
 imageUrl: /images/pumbaby.png
 category: mobile

@@ -152,6 +152,15 @@ export class MarkdownFileDataSource {
 
     const imageUrl = await getImageUrl();
 
+    const appStoreId =
+      typeof data.appStoreId === 'string'
+        ? data.appStoreId
+        : typeof data.appStoreId === 'number'
+          ? String(data.appStoreId)
+          : undefined;
+    const playStoreId =
+      typeof data.playStoreId === 'string' ? data.playStoreId : undefined;
+
     return {
       id: typeof data.id === 'string' ? data.id : file.replace('.md', ''),
       name: getName(),
@@ -162,6 +171,8 @@ export class MarkdownFileDataSource {
       technologies: getTechnologies(),
       imageUrl: imageUrl,
       category: getCategory(),
+      ...(appStoreId ? { appStoreId } : {}),
+      ...(playStoreId ? { playStoreId } : {}),
     };
   }
 
