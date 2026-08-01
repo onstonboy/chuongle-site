@@ -10,6 +10,9 @@ export const size = {
 export const contentType = 'image/png';
 
 export default function OpenGraphImage() {
+  const subtitle = `${SITE.tagline} by ${SITE.founder}`;
+  const host = SITE.url.replace(/^https?:\/\//, '');
+
   return new ImageResponse(
     (
       <div
@@ -29,12 +32,8 @@ export default function OpenGraphImage() {
         <div
           style={{
             display: 'flex',
+            flexDirection: 'row',
             alignItems: 'center',
-            gap: '18px',
-            fontSize: 28,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: '#A5B4FC',
           }}
         >
           <div
@@ -49,48 +48,68 @@ export default function OpenGraphImage() {
               color: '#fff',
               fontSize: 24,
               fontWeight: 700,
+              marginRight: 18,
             }}
           >
             C
           </div>
-          {SITE.name}
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div
             style={{
-              fontSize: 72,
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              maxWidth: 920,
+              display: 'flex',
+              fontSize: 28,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#A5B4FC',
             }}
           >
-            {SITE.headline}
-          </div>
-          <div
-            style={{
-              fontSize: 30,
-              color: '#A1A1AA',
-              maxWidth: 860,
-              lineHeight: 1.4,
-            }}
-          >
-            {SITE.tagline} by {SITE.founder}
+            {SITE.name}
           </div>
         </div>
 
         <div
           style={{
             display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 72,
+              fontWeight: 700,
+              lineHeight: 1.05,
+              letterSpacing: '-0.03em',
+              maxWidth: 920,
+              marginBottom: 20,
+            }}
+          >
+            {SITE.headline}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 30,
+              color: '#A1A1AA',
+              maxWidth: 860,
+              lineHeight: 1.4,
+            }}
+          >
+            {subtitle}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             fontSize: 24,
             color: '#71717A',
           }}
         >
-          <span>App Store · Google Play</span>
-          <span>{SITE.url.replace(/^https?:\/\//, '')}</span>
+          <div style={{ display: 'flex' }}>App Store · Google Play</div>
+          <div style={{ display: 'flex' }}>{host}</div>
         </div>
       </div>
     ),
