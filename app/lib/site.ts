@@ -18,9 +18,25 @@ export const SITE = {
     'published on the App Store and Google Play. Every product is designed, ' +
     'developed, and shipped independently.',
   email: 'chuongdev97@gmail.com',
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
+    'https://chuongle.dev',
+  locale: 'en_US',
   appStoreUrl: 'https://apps.apple.com/us/developer/chuong-le/id1602451499',
   playStoreUrl:
     'https://play.google.com/store/apps/dev?id=6296625987520320887',
+  keywords: [
+    'CDev',
+    'Chuong Le',
+    'indie mobile apps',
+    'iOS apps',
+    'Android apps',
+    'Flutter developer',
+    'privacy apps',
+    'AI mobile apps',
+    'App Store',
+    'Google Play',
+  ],
   focusAreas: [
     {
       title: 'Privacy-first utilities',

@@ -1,0 +1,17 @@
+{
+  "name": "CDev — Independent Mobile Apps",
+  "short_name": "CDev",
+  "description": "Privacy-first utilities, AI-powered tools, and creative apps for iOS and Android by Chuong Le.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090B",
+  "theme_color": "#09090B",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "300x300",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

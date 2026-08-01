@@ -233,6 +233,72 @@
   overflow: hidden;
 }
 
+.preview {
+  margin-bottom: var(--spacing-md);
+  margin-inline: calc(var(--spacing-lg) * -1);
+  padding-inline: var(--spacing-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.preview::-webkit-scrollbar {
+  display: none;
+}
+
+.previewTrack {
+  display: flex;
+  width: max-content;
+  gap: 0.55rem;
+  padding-bottom: 0.15rem;
+}
+
+.previewFrame {
+  flex: 0 0 auto;
+  height: 168px;
+  width: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
+  background: #0a0a0c;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
+}
+
+.recommended .previewFrame {
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.spotlight .previewFrame {
+  border-color: rgba(129, 140, 248, 0.4);
+}
+
+.previewImage {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .preview {
+    overflow: hidden;
+  }
+
+  .card:hover .previewTrack {
+    animation: previewMarquee var(--preview-duration, 18s) linear infinite;
+  }
+}
+
+@keyframes previewMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .features {
   list-style: none;
   margin-bottom: var(--spacing-md);
@@ -336,6 +402,10 @@
 
   .icon {
     transition: none;
+  }
+
+  .card:hover .previewTrack {
+    animation: none;
   }
 }
 

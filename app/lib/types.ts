@@ -13,6 +13,7 @@ export interface Project {
   downloads?: number;
   rating?: number;
   ratingCount?: number;
+  screenshots?: string[];
   isRecommended?: boolean;
   isSpotlight?: boolean;
 }

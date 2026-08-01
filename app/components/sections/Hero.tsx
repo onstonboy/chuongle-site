@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SITE } from '@/app/lib/site';
+import HeroMeteorField, { HeroMeteorIcon } from './HeroMeteorField';
 import styles from './Hero.module.css';
 
 const BANNER_PATH = '/images/banner.png';
 const LOGO_PATH = '/images/logo.png';
 
-export default function Hero() {
+interface HeroProps {
+  projectIcons?: HeroMeteorIcon[];
+}
+
+export default function Hero({ projectIcons = [] }: HeroProps) {
   const [mounted, setMounted] = useState(false);
   const [bannerError, setBannerError] = useState(false);
   const [logoError, setLogoError] = useState(false);
@@ -40,6 +45,8 @@ export default function Hero() {
             <div className={styles.bannerGlow} />
           </div>
         )}
+
+        <HeroMeteorField icons={projectIcons} />
 
         <div className={styles.inner}>
           <div className={styles.content}>

@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google';
 import Navigation from '@/app/components/features/Navigation';
 import Footer from '@/app/components/sections/Footer';
 import GradientBackground from '@/app/components/ui/GradientBackground';
+import { buildRootMetadata } from '@/app/lib/seo';
 import './styles/globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -11,17 +12,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
 });
 
-export const metadata: Metadata = {
-  title: 'CDev — Independent Mobile Apps',
-  description:
-    'CDev builds privacy-first utilities, AI-powered tools, and creative apps for iOS and Android.',
-  openGraph: {
-    title: 'CDev — Independent Mobile Apps',
-    description:
-      'CDev builds privacy-first utilities, AI-powered tools, and creative apps for iOS and Android.',
-    type: 'website',
-  },
-};
+export const metadata: Metadata = buildRootMetadata();
 
 export default function RootLayout({
   children,
@@ -39,4 +30,3 @@ export default function RootLayout({
     </html>
   );
 }
-

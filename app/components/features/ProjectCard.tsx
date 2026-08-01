@@ -69,6 +69,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       ? 'Also try'
       : null;
   const ctaLabel = isHighlighted ? 'Try this app' : 'Learn more';
+  const screenshots = project.screenshots ?? [];
+  const previewDuration = `${Math.max(14, screenshots.length * 2.8)}s`;
 
   return (
     <article
@@ -80,6 +82,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         animationDelay: `${index * 0.06}s`,
         '--tilt-x': `${tilt.x}deg`,
         '--tilt-y': `${tilt.y}deg`,
+        '--preview-duration': previewDuration,
       } as React.CSSProperties}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -102,7 +105,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             project.imageUrl.startsWith('http') ? (
               <img
                 src={project.imageUrl}
-                alt=""
+                alt={`${project.name} app icon`}
                 width={56}
                 height={56}
                 className={styles.icon}
@@ -112,7 +115,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             ) : (
               <Image
                 src={project.imageUrl}
-                alt=""
+                alt={`${project.name} app icon`}
                 width={56}
                 height={56}
                 className={styles.icon}
@@ -158,6 +161,28 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
         {project.description && (
           <p className={styles.description}>{project.description}</p>
+        )}
+
+        {screenshots.length > 0 && (
+          <div className={styles.preview} aria-label={`${project.name} preview`}>
+            <div className={styles.previewTrack}>
+              {[...screenshots, ...screenshots].map((src, i) => (
+                <div
+                  key={`${src}-${i}`}
+                  className={styles.previewFrame}
+                  aria-hidden={i >= screenshots.length}
+                >
+                  <img
+                    src={src}
+                    alt={`${project.name} screenshot ${(i % screenshots.length) + 1}`}
+                    className={styles.previewImage}
+                    loading={index < 3 && i === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         )}
 
         {project.features.length > 0 && (

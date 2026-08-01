@@ -147,6 +147,14 @@ export class MarkdownFileDataSource {
       return 'both';
     };
 
+    const getScreenshots = (): string[] | undefined => {
+      if (!Array.isArray(data.screenshots)) return undefined;
+      const urls = data.screenshots.filter(
+        (url): url is string => typeof url === 'string' && url.length > 0
+      );
+      return urls.length > 0 ? urls : undefined;
+    };
+
     const landingPageUrl = getLandingPageUrl();
     if (!landingPageUrl || landingPageUrl === '#') return null;
 
@@ -160,6 +168,7 @@ export class MarkdownFileDataSource {
           : undefined;
     const playStoreId =
       typeof data.playStoreId === 'string' ? data.playStoreId : undefined;
+    const screenshots = getScreenshots();
 
     return {
       id: typeof data.id === 'string' ? data.id : file.replace('.md', ''),
@@ -173,6 +182,7 @@ export class MarkdownFileDataSource {
       category: getCategory(),
       ...(appStoreId ? { appStoreId } : {}),
       ...(playStoreId ? { playStoreId } : {}),
+      ...(screenshots ? { screenshots } : {}),
     };
   }
 

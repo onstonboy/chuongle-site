@@ -6,19 +6,34 @@ export interface ProjectMetrics {
   downloads: number;
   rating: number;
   ratingCount: number;
+  screenshots: string[];
 }
 
 const APPLE_TIMEOUT_MS = 8_000;
 const GOOGLE_TIMEOUT_MS = 12_000;
 const GOOGLE_BATCH_SIZE = 5;
+const MAX_SCREENSHOTS = 8;
 
 interface ItunesApp {
   averageUserRating?: number;
   userRatingCount?: number;
+  screenshotUrls?: string[];
 }
 
 interface ItunesResponse {
   results: ItunesApp[];
+}
+
+function normalizeScreenshotUrl(url: string): string {
+  if (url.startsWith('http://')) {
+    return `https://${url.slice('http://'.length)}`;
+  }
+  return url;
+}
+
+function takeScreenshots(urls: string[] | undefined): string[] {
+  if (!urls?.length) return [];
+  return urls.slice(0, MAX_SCREENSHOTS).map(normalizeScreenshotUrl);
 }
 
 async function fetchAppleMetrics(appStoreId: string): Promise<ProjectMetrics | null> {
@@ -26,10 +41,13 @@ async function fetchAppleMetrics(appStoreId: string): Promise<ProjectMetrics | n
   const timeoutId = setTimeout(() => controller.abort(), APPLE_TIMEOUT_MS);
 
   try {
-    const res = await fetch(`https://itunes.apple.com/lookup?id=${appStoreId}`, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0' },
-    });
+    const res = await fetch(
+      `https://itunes.apple.com/lookup?id=${appStoreId}&country=us`,
+      {
+        signal: controller.signal,
+        headers: { 'User-Agent': 'Mozilla/5.0' },
+      }
+    );
 
     if (!res.ok) return null;
 
@@ -41,6 +59,7 @@ async function fetchAppleMetrics(appStoreId: string): Promise<ProjectMetrics | n
       downloads: 0,
       rating: app.averageUserRating ?? 0,
       ratingCount: app.userRatingCount ?? 0,
+      screenshots: takeScreenshots(app.screenshotUrls),
     };
   } catch {
     return null;
@@ -61,6 +80,7 @@ async function fetchGoogleMetrics(playStoreId: string): Promise<ProjectMetrics |
       downloads: app.minInstalls ?? 0,
       rating: app.score ?? 0,
       ratingCount: app.ratings ?? 0,
+      screenshots: takeScreenshots(app.screenshots),
     };
   } catch {
     return null;
@@ -87,7 +107,12 @@ function mergeMetrics(
     rating = Math.max(apple?.rating ?? 0, google?.rating ?? 0);
   }
 
-  return { downloads, rating, ratingCount };
+  const screenshots =
+    apple?.screenshots.length
+      ? apple.screenshots
+      : google?.screenshots ?? [];
+
+  return { downloads, rating, ratingCount, screenshots };
 }
 
 function popularityScore(metrics: ProjectMetrics): number {
@@ -116,11 +141,17 @@ async function enrichProjectsInner(projects: Project[]): Promise<Project[]> {
         const metrics = await fetchMetricsForProject(project);
         if (!metrics) return project;
 
+        const screenshots =
+          project.screenshots?.length
+            ? project.screenshots.slice(0, MAX_SCREENSHOTS)
+            : metrics.screenshots;
+
         return {
           ...project,
           downloads: metrics.downloads,
           rating: metrics.rating,
           ratingCount: metrics.ratingCount,
+          ...(screenshots.length > 0 ? { screenshots } : {}),
         };
       })
     );
@@ -135,6 +166,7 @@ async function enrichProjectsInner(projects: Project[]): Promise<Project[]> {
       downloads: project.downloads ?? 0,
       rating: project.rating ?? 0,
       ratingCount: project.ratingCount ?? 0,
+      screenshots: project.screenshots ?? [],
     });
 
     if (score > bestScore) {
@@ -155,7 +187,7 @@ const getCachedEnrichedProjects = unstable_cache(
     const projects = JSON.parse(serialized) as Project[];
     return enrichProjectsInner(projects);
   },
-  ['project-store-metrics'],
+  ['project-store-metrics-v3'],
   { revalidate: 3600, tags: ['store-stats', 'project-metrics'] }
 );
 
