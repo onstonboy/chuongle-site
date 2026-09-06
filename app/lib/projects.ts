@@ -3,6 +3,7 @@ import { enrichProjectsWithMetrics } from './project-metrics';
 import { Project } from './types';
 
 const PROJECT_DISPLAY_ORDER: string[] = [
+  'metro-habit',
   'maskshot-landing-page',
   'scorecounter-landing-page',
   'subkit-landing-page',
