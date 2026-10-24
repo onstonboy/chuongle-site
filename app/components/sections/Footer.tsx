@@ -37,6 +37,12 @@ export default function Footer() {
           >
             Google Play
           </a>
+          <a href="/privacy.html" className={styles.link}>
+            Privacy
+          </a>
+          <a href="/terms.html" className={styles.link}>
+            Terms
+          </a>
         </nav>
 
         <p className={styles.copyright}>
