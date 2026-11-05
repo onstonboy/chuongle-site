@@ -130,8 +130,12 @@ export function buildHomeJsonLd(projects: Project[]): Record<string, unknown>[] 
               image: project.imageUrl.startsWith('http')
                 ? project.imageUrl
                 : absoluteUrl(project.imageUrl),
-              applicationCategory: 'MobileApplication',
-              operatingSystem: 'iOS, Android',
+              applicationCategory:
+                project.category === 'macos'
+                  ? 'DesktopApplication'
+                  : 'MobileApplication',
+              operatingSystem:
+                project.category === 'macos' ? 'macOS' : 'iOS, Android',
               offers: {
                 '@type': 'Offer',
                 price: '0',

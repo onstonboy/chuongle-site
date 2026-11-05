@@ -13,6 +13,7 @@ const PROJECT_DISPLAY_ORDER: string[] = [
   'daily-quote-landing-page',
   'lucky-card-landing-page',
   'lucky-wheel-landing-page',
+  'polaris',
 ];
 
 const SPOTLIGHT_COUNT = 2;

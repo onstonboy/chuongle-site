@@ -140,8 +140,8 @@ export class MarkdownFileDataSource {
       return `/images/${slug}.png`;
     };
 
-    const getCategory = (): 'mobile' | 'web' | 'both' => {
-      if (data.category === 'mobile' || data.category === 'web' || data.category === 'both') {
+    const getCategory = (): Project['category'] => {
+      if (data.category === 'mobile' || data.category === 'web' || data.category === 'both' || data.category === 'macos') {
         return data.category;
       }
       return 'both';

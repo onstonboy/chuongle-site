@@ -7,7 +7,7 @@ export interface Project {
   features: string[];
   technologies: string[];
   imageUrl: string;
-  category: 'mobile' | 'web' | 'both';
+  category: 'mobile' | 'web' | 'both' | 'macos';
   appStoreId?: string;
   playStoreId?: string;
   downloads?: number;

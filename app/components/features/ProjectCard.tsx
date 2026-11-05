@@ -15,6 +15,7 @@ const CATEGORY_LABELS: Record<Project['category'], string> = {
   mobile: 'Mobile',
   web: 'Web',
   both: 'Mobile & Web',
+  macos: 'macOS',
 };
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
