@@ -12,6 +12,8 @@ features:
   - AI image generation with 30+ artistic styles
   - Background removal, text overlay & collage creator
   - Music suggestions matched to your image's vibe
+id: ai-caption
+name: AI Caption
 ---
 
 # AI Caption - Your AI-Powered Social Media Companion

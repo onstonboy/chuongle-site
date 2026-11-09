@@ -123,6 +123,43 @@
   box-shadow: 0 0 16px rgba(129, 140, 248, 0.15);
 }
 
+.iconWrapMacos {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconWrapMacos .icon {
+  height: calc(100% - 12px);
+}
+
+.macosBar {
+  height: 12px;
+  flex-shrink: 0;
+  background: linear-gradient(#3f3f46, #2e2e33);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding-left: 5px;
+}
+
+.macosBar i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.macosBar i:nth-child(1) {
+  background: #ff5f57;
+}
+
+.macosBar i:nth-child(2) {
+  background: #febc2e;
+}
+
+.macosBar i:nth-child(3) {
+  background: #28c840;
+}
+
 .icon {
   width: 100%;
   height: 100%;
@@ -349,12 +386,18 @@
   border-radius: var(--radius-sm);
 }
 
+.footer {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid var(--color-border);
+}
+
 .link {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--spacing-md) var(--spacing-lg);
-  border-top: 1px solid var(--color-border);
   color: var(--color-text-primary);
   font-size: var(--font-size-body-small);
   font-weight: 600;
@@ -362,13 +405,46 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.recommended .link {
+.storeIcons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding-right: var(--spacing-md);
+}
+
+.storeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  transition: color 0.2s ease, border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.storeIcon:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-accent-muted);
+}
+
+.recommended .footer {
   border-top-color: rgba(251, 191, 36, 0.2);
+}
+
+.recommended .link {
   color: #fbbf24;
 }
 
-.spotlight .link {
+.spotlight .footer {
   border-top-color: rgba(129, 140, 248, 0.25);
+}
+
+.spotlight .link {
   color: var(--color-accent);
 }
 

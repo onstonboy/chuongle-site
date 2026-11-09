@@ -71,6 +71,37 @@ export function buildRootMetadata(): Metadata {
   };
 }
 
+export function buildAppJsonLd(project: Project): Record<string, unknown> {
+  const isMacos = project.category === 'macos';
+  return {
+    '@type': 'SoftwareApplication',
+    name: project.name,
+    description: project.tagline || project.description,
+    url: absoluteUrl(`/apps/${project.id}`),
+    sameAs: project.landingPageUrl,
+    image: project.imageUrl.startsWith('http')
+      ? project.imageUrl
+      : absoluteUrl(project.imageUrl),
+    applicationCategory: isMacos ? 'DesktopApplication' : 'MobileApplication',
+    operatingSystem: isMacos ? 'macOS' : 'iOS, Android',
+    author: { '@id': `${SITE.url}/#organization` },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    ...(project.rating && project.ratingCount
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: project.rating,
+            ratingCount: project.ratingCount,
+          },
+        }
+      : {}),
+  };
+}
+
 export function buildHomeJsonLd(projects: Project[]): Record<string, unknown>[] {
   const organization = {
     '@type': 'Organization',
@@ -122,26 +153,7 @@ export function buildHomeJsonLd(projects: Project[]): Record<string, unknown>[] 
           itemListElement: projects.map((project, index) => ({
             '@type': 'ListItem',
             position: index + 1,
-            item: {
-              '@type': 'SoftwareApplication',
-              name: project.name,
-              description: project.tagline || project.description,
-              url: project.landingPageUrl,
-              image: project.imageUrl.startsWith('http')
-                ? project.imageUrl
-                : absoluteUrl(project.imageUrl),
-              applicationCategory:
-                project.category === 'macos'
-                  ? 'DesktopApplication'
-                  : 'MobileApplication',
-              operatingSystem:
-                project.category === 'macos' ? 'macOS' : 'iOS, Android',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD',
-              },
-            },
+            item: buildAppJsonLd(project),
           })),
         }
       : null;

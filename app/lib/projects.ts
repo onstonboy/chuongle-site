@@ -5,16 +5,16 @@ import { Project } from './types';
 const PROJECT_DISPLAY_ORDER: string[] = [
   'metro-habit',
   'morsey',
-  'maskshot-landing-page',
-  'scorecounter-landing-page',
-  'subkit-landing-page',
-  'ai-caption-landing-page',
-  'led-board-landing-page',
-  'daily-quote-landing-page',
-  'lucky-card-landing-page',
-  'lucky-wheel-landing-page',
-  'hanlingo-landing-page',
-  'shotx-landing-page',
+  'maskshot',
+  'score-counter',
+  'subkit',
+  'ai-caption',
+  'led-board',
+  'daily-quote',
+  'lucky-card',
+  'lucky-wheel',
+  'hanlingo',
+  'shotx',
   'polaris',
 ];
 
@@ -69,5 +69,12 @@ export async function getProjects(): Promise<Project[]> {
   const enriched = await enrichProjectsWithMetrics(projects);
   const withSpotlights = pickRandomSpotlights(enriched);
   return sortByDisplayOrder(withSpotlights);
+}
+
+export async function getProjectBySlug(
+  slug: string
+): Promise<Project | undefined> {
+  const projects = await getProjects();
+  return projects.find((project) => project.id === slug);
 }
 

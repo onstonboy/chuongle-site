@@ -18,4 +18,6 @@ features:
   - Built-in MCP server — let your AI agent do the ASO chores
   - Offline-first — everything stays on your Mac
   - Pay once a year, or once ever — no dashboard tax
+screenshots:
+  - /images/polaris/01_app.webp
 ---

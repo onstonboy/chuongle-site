@@ -16,6 +16,13 @@ name: Lucky Wheel
 tagline: Spin. Win. Celebrate.
 description: Fair, fun spin-wheel for parties, game nights, and everyday decisions.
 landingPageUrl: https://luckywheel.chuongle.dev
+id: lucky-wheel
+screenshots:
+  - /images/lucky-wheel/01_spin-yes-no.png
+  - /images/lucky-wheel/02_custom-items.png
+  - /images/lucky-wheel/03_store-celebrations.png
+  - /images/lucky-wheel/04_truth-or-dare.png
+  - /images/lucky-wheel/05_settings-themes.png
 ---
 
 # Lucky Wheel — Landing Page Brief

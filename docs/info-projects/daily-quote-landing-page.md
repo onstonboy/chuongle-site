@@ -13,6 +13,8 @@ features:
   - Beautiful full-screen backgrounds from Pexels & Unsplash
   - Favorites collection with search and topic filters
   - Smart "More like this" recommendations for discovery
+id: daily-quote
+name: Daily Quote
 ---
 
 # Daily Quote - Your Daily Dose of Inspiration 🌟

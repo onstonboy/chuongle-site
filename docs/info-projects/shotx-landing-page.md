@@ -15,4 +15,5 @@ features:
   - Device mockup studio — real device frames in one tap
   - Scroll-stitch long captures with edge tolerance
   - One-tap markup and crisp exports, fully on-device
+id: shotx
 ---

@@ -2,11 +2,13 @@ import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import Hero from '@/app/components/sections/Hero';
 import ProjectsShowcase from '@/app/components/sections/ProjectsShowcase';
+import Reviews from '@/app/components/sections/Reviews';
 import About from '@/app/components/sections/About';
 import StatsCounter from '@/app/components/features/StatsCounter';
 import StatsBoundary from '@/app/components/ui/StatsBoundary';
 import JsonLd from '@/app/components/seo/JsonLd';
 import { getProjects } from '@/app/lib/projects';
+import { getAppReviews } from '@/app/lib/reviews';
 import {
   SITE_DESCRIPTION,
   SITE_TITLE,
@@ -40,6 +42,8 @@ export default async function HomePage() {
     projects = [];
   }
 
+  const reviews = await getAppReviews(projects);
+
   return (
     <>
       <JsonLd data={buildHomeJsonLd(projects)} />
@@ -56,6 +60,7 @@ export default async function HomePage() {
         </Suspense>
       </StatsBoundary>
       <ProjectsShowcase projects={projects} />
+      <Reviews reviews={reviews} />
       <About />
     </>
   );

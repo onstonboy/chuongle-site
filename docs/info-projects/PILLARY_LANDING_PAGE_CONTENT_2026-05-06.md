@@ -19,6 +19,11 @@ features:
   - Adherence insights with clear trends to improve your routine
   - Exports & sharing for caregivers and clinicians (Premium)
   - Backup & restore to keep history safe across devices (Premium)
+screenshots:
+  - /images/pillary/01.png
+  - /images/pillary/02.png
+  - /images/pillary/03.png
+  - /images/pillary/04.png
 ---
 
 # Pillary — Landing Page + Terms + Privacy (Source of Truth)

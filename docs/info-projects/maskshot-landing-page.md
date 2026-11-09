@@ -13,6 +13,13 @@ features:
   - Secure vault protected by PIN or biometrics — nothing leaves your device
   - Save, share, or both — set a default export action in settings
   - Custom regex patterns for your own sensitive data types (Premium)
+id: maskshot
+screenshots:
+  - /images/maskshot/01.png
+  - /images/maskshot/02.png
+  - /images/maskshot/03.png
+  - /images/maskshot/04.png
+name: MaskShot
 ---
 
 # MaskShot — Clean Screenshots Before You Share

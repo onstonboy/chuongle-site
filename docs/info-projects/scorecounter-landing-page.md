@@ -12,6 +12,14 @@ features:
   - Full game history with rankings and win analytics
   - Epic confetti & trophy celebrations on wins
   - 100% offline — no account needed, start immediately
+id: score-counter
+screenshots:
+  - /images/score-counter/01.png
+  - /images/score-counter/02.png
+  - /images/score-counter/03.png
+  - /images/score-counter/04.png
+  - /images/score-counter/05.png
+name: Score Counter
 ---
 
 # Score Counter – The Ultimate Game Scoring Companion

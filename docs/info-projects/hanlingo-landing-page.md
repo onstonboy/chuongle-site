@@ -17,4 +17,11 @@ features:
   - The Art of War — applied sentences from Sun Tzu
   - Business Chinese — meetings, emails & negotiations
   - Trends & slang — the Chinese people actually speak
+id: hanlingo
+screenshots:
+  - /images/hanlingo/01_arcade.png
+  - /images/hanlingo/02_learn.png
+  - /images/hanlingo/03_listening.png
+  - /images/hanlingo/04_exams.png
+  - /images/hanlingo/05_calligraphy.png
 ---

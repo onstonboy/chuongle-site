@@ -12,6 +12,14 @@ features:
   - Export creations as GIF or video directly to your gallery
   - Dynamic backgrounds — gradients, parallax rain, metaballs
   - Multi-board mode with landscape display and screen lock
+id: led-board
+screenshots:
+  - /images/led-board/01.png
+  - /images/led-board/02.png
+  - /images/led-board/03.png
+  - /images/led-board/04.png
+  - /images/led-board/05.png
+name: LED Board
 ---
 
 # LED Board - Project Context Documentation

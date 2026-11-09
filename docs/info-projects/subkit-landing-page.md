@@ -5,6 +5,14 @@ category: mobile
 technologies:
   - Flutter
   - Dart
+id: subkit
+screenshots:
+  - /images/subkit/01.png
+  - /images/subkit/02.png
+  - /images/subkit/03.png
+  - /images/subkit/04.png
+  - /images/subkit/05.png
+name: Subkit
 ---
 
 # Subkit

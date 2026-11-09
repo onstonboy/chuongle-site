@@ -12,6 +12,14 @@ features:
   - Pre-built Do or Drink, Daring, and Couples decks
   - 5 stunning card themes with smooth 3D flip animations
   - Offline play with confetti celebrations and group support
+id: lucky-card
+screenshots:
+  - /images/lucky-card/01.webp
+  - /images/lucky-card/02.webp
+  - /images/lucky-card/03.webp
+  - /images/lucky-card/04.webp
+  - /images/lucky-card/05.webp
+name: Lucky Card
 ---
 
 # Lucky Card - Landing Page Content Guide

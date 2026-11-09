@@ -2,8 +2,11 @@
 
 import { Project } from '@/app/lib/types';
 import { formatDownloads, formatRating } from '@/app/lib/format-metrics';
+import { getStoreLinks } from '@/app/lib/store-links';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { FaApple, FaGooglePlay } from 'react-icons/fa';
 import styles from './ProjectCard.module.css';
 
 interface ProjectCardProps {
@@ -70,6 +73,8 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       ? 'Also try'
       : null;
   const ctaLabel = isHighlighted ? 'Try this app' : 'Learn more';
+  const storeLinks = getStoreLinks(project);
+  const isMacos = project.category === 'macos';
   const screenshots = project.screenshots ?? [];
   const previewDuration = `${Math.max(14, screenshots.length * 2.8)}s`;
 
@@ -101,7 +106,16 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       )}
 
       <div className={styles.header}>
-        <div className={styles.iconWrap}>
+        <div
+          className={`${styles.iconWrap} ${isMacos ? styles.iconWrapMacos : ''}`}
+        >
+          {isMacos && (
+            <div className={styles.macosBar} aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </div>
+          )}
           {!imageError ? (
             project.imageUrl.startsWith('http') ? (
               <img
@@ -207,15 +221,38 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         )}
       </div>
 
-      <a
-        href={project.landingPageUrl}
-        className={styles.link}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {ctaLabel}
-        <span className={styles.arrow} aria-hidden="true">→</span>
-      </a>
+      <div className={styles.footer}>
+        <Link href={`/apps/${project.id}`} className={styles.link}>
+          {ctaLabel}
+          <span className={styles.arrow} aria-hidden="true">→</span>
+        </Link>
+        {(storeLinks.apple || storeLinks.google) && (
+          <div className={styles.storeIcons}>
+            {storeLinks.apple && (
+              <a
+                href={storeLinks.apple}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} on the App Store`}
+                className={styles.storeIcon}
+              >
+                <FaApple aria-hidden="true" />
+              </a>
+            )}
+            {storeLinks.google && (
+              <a
+                href={storeLinks.google}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} on Google Play`}
+                className={styles.storeIcon}
+              >
+                <FaGooglePlay aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        )}
+      </div>
     </article>
   );
 }
