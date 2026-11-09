@@ -4,7 +4,7 @@ id: polaris
 name: Polaris
 tagline: ASO intelligence for indie app developers
 description: A native macOS app for App Store Optimization — keyword research, rank tracking, and competitor intelligence, built for indie iOS & macOS developers.
-landingPageUrl: https://polaris.chuongle.dev
+landingPageUrl: https://polarisaso.com
 imageUrl: /images/polaris.png
 category: macos
 technologies:
