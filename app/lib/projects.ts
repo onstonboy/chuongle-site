@@ -13,6 +13,8 @@ const PROJECT_DISPLAY_ORDER: string[] = [
   'daily-quote-landing-page',
   'lucky-card-landing-page',
   'lucky-wheel-landing-page',
+  'hanlingo-landing-page',
+  'shotx-landing-page',
   'polaris',
 ];
 
