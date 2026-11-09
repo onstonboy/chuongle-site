@@ -20,6 +20,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
+    ...[
+      'edu-runner',
+      'finger-challenge',
+    ].flatMap((slug) =>
+      ['privacy', 'terms'].map((page) => ({
+        url: `${SITE.url}/${slug}/${page}`,
+        lastModified: legalUpdated,
+        changeFrequency: 'yearly' as const,
+        priority: 0.2,
+      }))
+    ),
     {
       url: `${SITE.url}/privacy.html`,
       lastModified: legalUpdated,
